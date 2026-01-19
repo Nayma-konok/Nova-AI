@@ -10,6 +10,9 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 gemini_key = os.environ.get("Gemini_Api_Key")
 
+if not gemini_key:
+    raise ValueError("Gemini_Api_Key not found. Check Hugging Face Secrets.")
+
 system_prompt="""You are Nova, a friendly, witty, and intelligent AI assistant.  
 You can answer any question the user asks — from serious topics to silly curiosities — 
 with clarity, confidence, and a touch of humor.Keep your tone light, engaging, and positive.  
@@ -60,7 +63,7 @@ with page:
         # Chat With Nova
         Welcome to your personal conversation with Nova
         """
-)
+    )
     chatbot=gr.Chatbot(type="messages",
                        avatar_images=[None,"supernova_1993J.jpg"],
                        show_label=False)
@@ -73,4 +76,4 @@ with page:
     Clear=gr.Button("Clear Chat",variant="secondary")
     Clear.click(clear_chat,outputs=[msg, chatbot])
 
-page.launch(share=True)
+page.launch()
